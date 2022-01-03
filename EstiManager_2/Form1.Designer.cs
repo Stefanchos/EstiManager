@@ -58,8 +58,8 @@ namespace EstiManager_2
             // 
             
             this.comboBox1.FormattingEnabled = true;
-            
-            this.comboBox1.Items.AddRange(Search.files);
+            Search search = new Search();
+            this.comboBox1.Items.AddRange(search.Files);
             this.comboBox1.Location = new System.Drawing.Point(35, 98);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(463, 23);

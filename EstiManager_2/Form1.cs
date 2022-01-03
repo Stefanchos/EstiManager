@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 namespace EstiManager_2
 {
@@ -26,8 +27,14 @@ namespace EstiManager_2
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //Form1 form1 = new Form1();
             string selectedState = comboBox1.SelectedItem.ToString();
-            File.Move("D:\\Estimate_2.0_774-812\\LSESTIMT\\" + selectedState, "D:\\Estimate_2.0_774-812\\LSESTIMT\\LSESTIMT.DBS");
+            File.Move("D:\\Estimate_2.0_774-812\\LSESTIMT\\" + selectedState, "D:\\Estimate_2.0_774-812\\LSESTIMT\\LSESTIMT.DBS"); //Возможно, стоит перенести в отдельную функцию? Вопрос с переменной
+            Process.Start("D:\\Estimate_2.0_774-812\\ESTIMATE.exe");
+
+            Check.check_est();
+            //Form1.visible = false;
+
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -43,6 +50,11 @@ namespace EstiManager_2
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectedState = comboBox1.SelectedItem.ToString();
+        }
+
+        private void no_btn_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
