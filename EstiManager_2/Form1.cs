@@ -28,13 +28,27 @@ namespace EstiManager_2
         private void button1_Click(object sender, EventArgs e)
         {
             //Form1 form1 = new Form1();
-            string selectedState = comboBox1.SelectedItem.ToString();
-            File.Move("D:\\Estimate_2.0_774-812\\LSESTIMT\\" + selectedState, "D:\\Estimate_2.0_774-812\\LSESTIMT\\LSESTIMT.DBS"); //Возможно, стоит перенести в отдельную функцию? Вопрос с переменной
-            Process.Start("D:\\Estimate_2.0_774-812\\ESTIMATE.exe");
+            try
+            {
+                string selectedState = comboBox1.SelectedItem.ToString();
+                Compress.cBoxSelected = selectedState;
+                string ePath = ReadConfig.readEstPath();
+                File.Move(ePath + @"\LSESTIMT\" + selectedState, ePath + @"\LSESTIMT\LSESTIMT.DBS"); //Возможно, стоит перенести в отдельную функцию? Вопрос с переменной
+                Process.Start(ePath + @"\ESTIMATE.exe");
+                string appdata = Environment.ExpandEnvironmentVariables("%appdata%");
+                string wPath = appdata + @"\estConfig.txt";
+                string newText = selectedState;
+                Config.WriteFileLine(newText, wPath, 2);
+                //Config.WriteFile(wPath, savePath);
 
-            Check.check_est();
-            //Form1.visible = false;
-
+                this.Hide();
+                Check.check_est();
+            }
+            catch (NullReferenceException)
+            {
+                noSelected noSel = new noSelected();
+                noSel.Show();
+            }
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -54,7 +68,28 @@ namespace EstiManager_2
 
         private void no_btn_Click(object sender, EventArgs e)
         {
-            Close();
+            Application.Exit();
+        }
+
+        private void def_Click(object sender, EventArgs e)
+        {
+            string selectedState = comboBox1.SelectedItem.ToString();
+            Compress.cBoxSelected = selectedState;
+            string appdata = Environment.ExpandEnvironmentVariables("%appdata%");
+            string wPath = appdata + @"\estConfig.txt";
+            string newText = selectedState;
+            Config.WriteFileLine(newText, wPath, 3);
+        }
+
+        private void rest_Click(object sender, EventArgs e)
+        {
+            Backup backup = new Backup();
+            backup.Show();
+        }
+
+        private void no_btn_Click_1(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -8,24 +8,19 @@ using System.Windows.Forms;
 
 namespace EstiManager_2
 {
-    public partial class ZIp : Form
+    public partial class noSelected : Form
     {
-        public ZIp()
+        public noSelected()
         {
             InitializeComponent();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            Compress.compressPatch();
+            Close();
         }
 
-        private void ZIp_Load(object sender, EventArgs e)
+        private void noSelected_Load(object sender, EventArgs e)
         {
 
         }

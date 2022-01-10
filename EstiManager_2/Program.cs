@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using System.IO.Compression;
 
 namespace EstiManager_2
 {
     static class Program
     {
+        
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -19,7 +21,31 @@ namespace EstiManager_2
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Config.firstRun();
+            Config.crashBase();
+
             Application.Run(new Form1());
+
+        }
+    }
+    public static class ReadConfig
+    {
+        
+        public static string readEstPath()
+        {
+            string rPath = Environment.ExpandEnvironmentVariables("%appdata%") + @"\estConfig.txt";
+            int strNum = 0;
+            string estPath = Config.Read(rPath, strNum);
+
+            return estPath;
+        }
+        public static string readUseBase()
+        {
+            string rPath = Environment.ExpandEnvironmentVariables("%appdata%") + @"\estConfig.txt";
+            int strNum = 1;
+            string useBase = Config.Read(rPath, strNum);
+
+            return useBase;
         }
     }
     class Search
@@ -29,8 +55,9 @@ namespace EstiManager_2
         public string[] Files  //В тот момент, когда код формы спрашивает за массив, срабатывает код отсбда. Вроде бы так короче...
         {
             get {
-                files = System.IO.Directory.GetFiles("D:\\Estimate_2.0_774-812\\LSESTIMT", "*.DBS");
-                String pch = @"D:\Estimate_2.0_774-812\LSESTIMT\";
+                string ePath = ReadConfig.readEstPath();
+                files = System.IO.Directory.GetFiles(ePath + @"\LSESTIMT", "*.DBS");
+                String pch = ePath + @"\LSESTIMT\";
                 for (int i = 0; i < files.Length; i++)
                 {
                     files[i] = files[i].Substring(pch.Length); //Срезаем путь в названии
@@ -38,6 +65,21 @@ namespace EstiManager_2
                 return this.files;
             }
         
+        }
+        public string[] bupFiles  //В тот момент, когда код формы спрашивает за массив, срабатывает код отсбда. Вроде бы так короче...
+        {
+            get
+            {
+                string ePath = ReadConfig.readEstPath();
+                files = System.IO.Directory.GetFiles(ePath + @"\LSESTIMT\BACKUP", "*.zip");
+                String pch = ePath + @"\LSESTIMT\BACKUP\";
+                for (int i = 0; i < files.Length; i++)
+                {
+                    files[i] = files[i].Substring(pch.Length); //Срезаем путь в названии
+                }
+                return this.files;
+            }
+
         }
     }
     class Check
@@ -52,11 +94,16 @@ namespace EstiManager_2
             }
             else
             {
-                zip f_zip = new zip();
+                ZIp f_zip = new ZIp();
+                string ePath = ReadConfig.readEstPath();
+                string baseName = Config.BaseName();
+                File.Move(ePath + @"\LSESTIMT\LSESTIMT.DBS" , ePath + @"\LSESTIMT\" + baseName);
                 f_zip.Show();
             }
 
             
         }
     }
+    
+    
 }

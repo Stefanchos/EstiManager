@@ -6,4 +6,10 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Update="Exit - Копировать.resx">
+      <DependentUpon>Exit.resx</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
