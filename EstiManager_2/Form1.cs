@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using Microsoft.VisualBasic;
+using System.Threading;
 
 namespace EstiManager_2
 {
@@ -33,13 +35,13 @@ namespace EstiManager_2
                 string selectedState = comboBox1.SelectedItem.ToString();
                 Compress.cBoxSelected = selectedState;
                 string ePath = ReadConfig.readEstPath();
-                File.Move(ePath + @"\LSESTIMT\" + selectedState, ePath + @"\LSESTIMT\LSESTIMT.DBS"); //Возможно, стоит перенести в отдельную функцию? Вопрос с переменной
-                Process.Start(ePath + @"\ESTIMATE.exe");
+                /*File.Move(ePath + @"\LSESTIMT\" + selectedState, ePath + @"\LSESTIMT\LSESTIMT.DBS");*/ //Возможно, стоит перенести в отдельную функцию? Вопрос с переменной
+                File.Move(ePath + @"\LSESTIMT\" + selectedState, ePath + @"\LSESTIMT\LSESTIMT.DBS");
                 string appdata = Environment.ExpandEnvironmentVariables("%appdata%");
                 string wPath = appdata + @"\estConfig.txt";
                 string newText = selectedState;
                 Config.WriteFileLine(newText, wPath, 2);
-                //Config.WriteFile(wPath, savePath);
+                Check.start();
 
                 this.Hide();
                 Check.check_est();
@@ -50,6 +52,7 @@ namespace EstiManager_2
                 noSel.Show();
             }
         }
+        
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {

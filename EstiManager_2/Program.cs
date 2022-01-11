@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using System.IO.Compression;
+using System.Threading;
 
 namespace EstiManager_2
 {
@@ -86,9 +87,10 @@ namespace EstiManager_2
     {
         public static void check_est()
         {
-            var procIsRunning = Process.GetProcessesByName("Estimate");
-            
-            if (procIsRunning.Length == 1)
+            var procIsRunningEst = Process.GetProcessesByName("Estimate");
+            var procIsRunningDb = Process.GetProcessesByName("dbnt1sv");
+
+            if (procIsRunningEst.Length == 1 | procIsRunningDb.Length == 1)
             {
                 check_est();
             }
@@ -102,6 +104,24 @@ namespace EstiManager_2
             }
 
             
+        }
+
+        public static void start()
+        {
+            string ePath = ReadConfig.readEstPath();
+            string Base = ePath + @"\LSESTIMT\LSESTIMT.DBS";
+            FileInfo fileInf = new FileInfo(Base);
+            if (fileInf.Exists)
+            {
+                Process proc = new Process();
+                proc.StartInfo.FileName = @"D:\Estimate_2.0_774-812\ESTIMATE.exe";
+                proc.StartInfo.WorkingDirectory = @"D:\Estimate_2.0_774-812";
+                proc.Start();
+            }
+            else
+            {
+                start();
+            }
         }
     }
     
