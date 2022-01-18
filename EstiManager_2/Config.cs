@@ -53,8 +53,9 @@ namespace EstiManager_2
             {
                 sw.WriteLine(estPath);
             }
-            Config.WriteFile(wPath, "def");
+            Config.WriteFile(wPath, "Преименуйте базу.DBS");
             Config.WriteFile(wPath, "Выбор базы");
+            Config.WriteFile(wPath, "1");
             Directory.CreateDirectory(estPath + @"\LSESTIMT\BACKUP");
         }
         public static void WriteFile(string wPath, string savePath)
@@ -92,6 +93,18 @@ namespace EstiManager_2
             string baseName = Config.Read(rPath, strNum);
 
             return baseName;
+        }
+        public static void reFirstWrite()
+        {
+            FolderBrowserDialog FBD = new FolderBrowserDialog();
+            if (FBD.ShowDialog() == DialogResult.OK)
+            {
+                string sPath = FBD.SelectedPath;
+                string estPath = sPath;
+                string wPath = Environment.ExpandEnvironmentVariables("%appdata%") + @"\estConfig.txt";
+                Config.WriteFileLine(estPath, wPath, 1);
+                
+            }
         }
     }
 }

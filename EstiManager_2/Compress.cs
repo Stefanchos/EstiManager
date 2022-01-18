@@ -67,7 +67,7 @@ namespace EstiManager_2
             
 
             DcprsOk dcprs = new DcprsOk();
-            dcprs.Show();
+            dcprs.ShowDialog();
 
         }
     }

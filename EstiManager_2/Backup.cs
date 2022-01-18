@@ -24,7 +24,8 @@ namespace EstiManager_2
         {
             string selectedState = comboBox1.SelectedItem.ToString();
             string[] words = selectedState.Split(new char[] { ' ' });
-            string rBase = words[0];
+            string endTime = words[words.Length - 2] + " " + words[words.Length - 1];
+            string rBase = selectedState.Replace(endTime , "");
             string ePath = ReadConfig.readEstPath();
             string pachIn = ePath + @"\LSESTIMT\BACKUP\" + selectedState;
             string pachOut = ePath + @"\LSESTIMT\" + rBase;

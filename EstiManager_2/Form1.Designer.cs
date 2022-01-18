@@ -42,6 +42,9 @@ namespace EstiManager_2
             this.label1 = new System.Windows.Forms.Label();
             this.def = new System.Windows.Forms.Button();
             this.rest = new System.Windows.Forms.Button();
+            this.Fload = new System.Windows.Forms.Button();
+            this.Refr = new System.Windows.Forms.Button();
+            this.Sett = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ok_btn
@@ -67,18 +70,10 @@ namespace EstiManager_2
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            Search search = new Search();
-            this.comboBox1.Items.AddRange(search.Files);
-            //Search search = new Search();
-            //this.comboBox1.Items.AddRange(search.Files);
             this.comboBox1.Location = new System.Drawing.Point(35, 98);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(463, 23);
             this.comboBox1.TabIndex = 3;
-            string rPath = Environment.ExpandEnvironmentVariables("%appdata%") + @"\estConfig.txt";
-            int strNum = 2;
-            string estPath = Config.Read(rPath, strNum);
-            this.comboBox1.Text = estPath;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label1
@@ -111,11 +106,47 @@ namespace EstiManager_2
             this.rest.UseVisualStyleBackColor = true;
             this.rest.Click += new System.EventHandler(this.rest_Click);
             // 
+            // Fload
+            // 
+            this.Fload.BackgroundImage = global::EstiManager_2.Properties.Resources.icons8_папка_30;
+            this.Fload.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Fload.Location = new System.Drawing.Point(464, 185);
+            this.Fload.Name = "Fload";
+            this.Fload.Size = new System.Drawing.Size(34, 29);
+            this.Fload.TabIndex = 7;
+            this.Fload.UseVisualStyleBackColor = true;
+            this.Fload.Click += new System.EventHandler(this.Fload_Click);
+            // 
+            // Refr
+            // 
+            this.Refr.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Refr.Image = global::EstiManager_2.Properties.Resources.icons8_обновить_24;
+            this.Refr.Location = new System.Drawing.Point(380, 185);
+            this.Refr.Name = "Refr";
+            this.Refr.Size = new System.Drawing.Size(34, 29);
+            this.Refr.TabIndex = 8;
+            this.Refr.UseVisualStyleBackColor = true;
+            this.Refr.Click += new System.EventHandler(this.Refr_Click);
+            // 
+            // Sett
+            // 
+            this.Sett.BackgroundImage = global::EstiManager_2.Properties.Resources.icons8_настройки_24;
+            this.Sett.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Sett.Location = new System.Drawing.Point(422, 185);
+            this.Sett.Name = "Sett";
+            this.Sett.Size = new System.Drawing.Size(34, 29);
+            this.Sett.TabIndex = 9;
+            this.Sett.UseVisualStyleBackColor = true;
+            this.Sett.Click += new System.EventHandler(this.Sett_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(534, 356);
+            this.Controls.Add(this.Sett);
+            this.Controls.Add(this.Refr);
+            this.Controls.Add(this.Fload);
             this.Controls.Add(this.rest);
             this.Controls.Add(this.def);
             this.Controls.Add(this.label1);
@@ -123,6 +154,8 @@ namespace EstiManager_2
             this.Controls.Add(this.no_btn);
             this.Controls.Add(this.ok_btn);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(550, 395);
+            this.MinimumSize = new System.Drawing.Size(550, 395);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EstiManager";
@@ -140,6 +173,9 @@ namespace EstiManager_2
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button def;
         private System.Windows.Forms.Button rest;
+        private System.Windows.Forms.Button Fload;
+        private System.Windows.Forms.Button Refr;
+        private System.Windows.Forms.Button Sett;
     }
 }
 

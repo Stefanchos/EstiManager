@@ -24,7 +24,10 @@ namespace EstiManager_2
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            this.comboBox1.Items.Clear();
+            Search search = new Search();
+            this.comboBox1.Items.AddRange(search.Files);
+            this.comboBox1.Text = Config.Read(Environment.ExpandEnvironmentVariables("%appdata%") + @"\estConfig.txt", 2);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -93,6 +96,29 @@ namespace EstiManager_2
         private void no_btn_Click_1(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void Fload_Click(object sender, EventArgs e)
+        {
+
+            string ePath = ReadConfig.readEstPath();
+            Process.Start("explorer.exe", ePath + @"\LSESTIMT\");
+        }
+
+        private void Refr_Click(object sender, EventArgs e)
+        {
+            //Временно, научиться вызывать лоад
+            this.comboBox1.Items.Clear();
+            Search search = new Search();
+            this.comboBox1.Items.AddRange(search.Files);
+            IniFile ifile = new IniFile();
+            ifile.startReWrite();
+        }
+
+        private void Sett_Click(object sender, EventArgs e)
+        {
+            Settings settings = new Settings();
+            settings.Show();
         }
     }
 }

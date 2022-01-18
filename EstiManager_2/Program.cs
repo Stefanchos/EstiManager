@@ -57,7 +57,21 @@ namespace EstiManager_2
         {
             get {
                 string ePath = ReadConfig.readEstPath();
-                files = System.IO.Directory.GetFiles(ePath + @"\LSESTIMT", "*.DBS");
+                try
+                {
+                    files = Directory.GetFiles(ePath + @"\LSESTIMT", "*.DBS");
+                }
+                catch 
+                {
+                    Config.reFirstWrite();
+                    files = Directory.GetFiles(ePath + @"\LSESTIMT", "*.DBS");
+                    String pchn = ePath + @"\LSESTIMT\";
+                    for (int i = 0; i < files.Length; i++)
+                    {
+                        files[i] = files[i].Substring(pchn.Length); //Срезаем путь в названии
+                    }
+                    return this.files;
+                }
                 String pch = ePath + @"\LSESTIMT\";
                 for (int i = 0; i < files.Length; i++)
                 {
@@ -92,6 +106,7 @@ namespace EstiManager_2
 
             if (procIsRunningEst.Length == 1 | procIsRunningDb.Length == 1)
             {
+                Thread.Sleep(1000);
                 check_est();
             }
             else
@@ -100,7 +115,17 @@ namespace EstiManager_2
                 string ePath = ReadConfig.readEstPath();
                 string baseName = Config.BaseName();
                 File.Move(ePath + @"\LSESTIMT\LSESTIMT.DBS" , ePath + @"\LSESTIMT\" + baseName);
-                f_zip.Show();
+                string setCompress = Config.Read(Environment.ExpandEnvironmentVariables("%appdata%") + @"\estConfig.txt", 3);
+
+                if (setCompress == "1")
+                {
+                    f_zip.Show();
+                }
+                else
+                {
+                    Application.Exit();
+                }
+                
             }
 
             
@@ -114,8 +139,8 @@ namespace EstiManager_2
             if (fileInf.Exists)
             {
                 Process proc = new Process();
-                proc.StartInfo.FileName = @"D:\Estimate_2.0_774-812\ESTIMATE.exe";
-                proc.StartInfo.WorkingDirectory = @"D:\Estimate_2.0_774-812";
+                proc.StartInfo.FileName = ePath + @"\ESTIMATE.exe";
+                proc.StartInfo.WorkingDirectory = ePath;
                 proc.Start();
             }
             else
@@ -123,7 +148,8 @@ namespace EstiManager_2
                 start();
             }
         }
+        
+        
     }
-    
-    
+
 }
